@@ -62,9 +62,10 @@
                 </li>
                 <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover"><a href="#" class="pure-menu-link">Year</a>
                     <ul class="pure-menu-children">
-                        <li class="pure-menu-item"><a @click="selectYear(1990)" href="#" class="pure-menu-link">1990-1999</a></li>
-                        <li class="pure-menu-item"><a @click="selectYear(2000)" href="#" class="pure-menu-link">2000-2009</a></li>
-                        <li class="pure-menu-item"><a @click="selectYear(2010)" href="#" class="pure-menu-link">2010-2020</a></li>
+                        <li class="pure-menu-item"><a @click="selectDecade(0)" href="#" class="pure-menu-link">1980-1989</a></li>
+                        <li class="pure-menu-item"><a @click="selectDecade(1)" href="#" class="pure-menu-link">1900-1999</a></li>
+                        <li class="pure-menu-item"><a @click="selectDecade(2)" href="#" class="pure-menu-link">2000-2009</a></li>
+                        <li class="pure-menu-item"><a @click="selectDecade(3)" href="#" class="pure-menu-link">2010-2019</a></li>
                     </ul>
                 </li>
             </ul>
@@ -85,11 +86,18 @@
                 car_make: '',
                 car_model: '',
                 car_model_year: '',
+                decade: '',
             }
         },
         computed: {
             cars() {
-                return this.$root.$data.cars.filter(car => ((car.car_make === this.car_make) && (this.car_model === '')) || ((car.car_model === this.car_model) && (this.car_make === '')) || ((car.car_make === this.car_make) && (car.car_model === this.car_model)));
+                return this.$root.$data.cars.filter(car => ((this.car_make === car.car_make) && (this.car_model === '') && (this.decade === '')) ||
+                                                            ((this.car_model === car.car_model) && (this.car_make === '') && (this.decade === '')) ||
+                                                            ((this.car_make === '') && (this.car_model === '') && (this.decade === car.decade)) ||
+                                                            ((car.car_make === this.car_make) && (car.car_model === this.car_model) && (this.decade === '')) ||
+                                                            ((this.car_make === car.car_make) && (this.car_model === '') && (this.decade === car.decade)) ||
+                                                            ((this.car_make === '') && (this.car_model === car.car_model) && (this.decade === car.decade)) ||
+                                                            ((this.car_make === car.car_make) && (this.car_model === car.car_model) && (this.decade === car.decade)));
             }
         },
         methods: {
@@ -113,6 +121,9 @@
             selectModel(car_model) {
                 this.car_model = car_model;
             },
+            selectDecade(decade) {
+                this.decade = decade;
+            }
             
         }
     }
