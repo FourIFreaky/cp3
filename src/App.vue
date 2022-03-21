@@ -6,6 +6,9 @@
       <router-link to="/about">About</router-link>
     </nav>
     <router-view/>
+    <div id="footer">
+      <a href="https://github.com/FourIFreaky/cp3">Github Repository</a>
+    </div>
   </div>
 </template>
 
@@ -32,6 +35,9 @@ nav a.router-link-exact-active {
 }
 
 #footer {
-
+  text-align: left;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 </style>
